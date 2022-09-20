@@ -1,0 +1,73 @@
+PROGRAM:
+
+#include<iostream>
+using namespace std;
+
+void swap(int *a,int *b)
+{
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+int partition(int a[],int s,int e)
+{
+    int count_smaller=0;
+    int pivot=a[s];
+    for(int i=s+1;i<=e;i++)
+    {
+        if(a[i]<=pivot)
+            count_smaller++;
+    }
+    int pivot_i = s+count_smaller;
+    swap(&a[s],&a[pivot_i]);
+    int i=s,j=e;
+    
+    while(i<pivot_i && j>pivot_i)
+    {
+        while (a[i] <= a[pivot_i]) {
+            i++;
+        }
+ 
+        while (a[j] > a[pivot_i]) {
+            j--;
+        }
+ 
+        if (i < pivot_i && j > pivot_i) {
+            swap(&a[i++],&a[j--]);
+        }
+    }
+    return pivot_i;
+    
+}
+void quickSort(int input[], int start, int end)
+{
+	if(start>=end)
+        return;
+    int p_index = partition(input,start,end);
+    quickSort(input,start,p_index-1);
+    quickSort(input,p_index+1,end);
+}
+void quickSort(int input[], int size) {
+ 
+	quickSort(input, 0, size - 1);
+}
+int main(){
+    int n;
+    cin >> n;
+  
+    int *input = new int[n];
+    
+    for(int i = 0; i < n; i++) {
+        cin >> input[i];
+    }
+    
+    quickSort(input, n);
+    for(int i = 0; i < n; i++) {
+        cout << input[i] << " ";
+    }
+    
+    delete [] input;
+
+}
+
+
