@@ -1,0 +1,60 @@
+PROGRAM:
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int keypad(int num, string output[]){
+    static int flag=1,current_count=0;
+    if(num==0 || num==1)
+    {
+        output[0]="";
+        return 1;
+    }
+    string key[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    int count=keypad(num/10,output);
+    int smallValue=num%10;
+    long int size=key[smallValue].size();
+    long int size_loop=size*count;
+       if(flag>1)
+       {int i;
+        for(i=current_count;i<size_loop;i++)
+            output[i]=output[i-current_count];
+        current_count=i;
+    }
+    else
+    {
+        
+        for(int i=0;i<size;i++)
+        {
+            output[i]=key[smallValue][i];
+            current_count++;
+        }
+    }
+    if(flag>1)
+    {
+        int j=0;
+        for(int i=0;i<size_loop;i++)
+        {
+            output[i]+=key[smallValue][j];
+            if((i+1)%count==0)
+                j++;
+        }
+    }
+    flag++;
+    return size*count;
+    
+}
+
+int main(){
+    int num;
+    cin >> num;
+
+    string output[10000];
+    int count = keypad(num, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}
