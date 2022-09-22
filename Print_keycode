@@ -1,0 +1,34 @@
+PROGRAM:
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+void printkeypad1(int num,string output)
+{   int flag=0;
+    string key[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    int smallvalue=num%10;
+    for(int i=0;i<key[smallvalue].size();i++)
+    {
+        //output=key[smallvalue][i]+output;
+        printkeypad1(num/10,key[smallvalue][i]+output);
+        flag=1;
+    }
+    
+    if(flag!=1)
+        cout<<output<<endl;
+    return;
+}
+void printKeypad(int num)
+{   string output="";
+    printkeypad1(num,output);
+}
+
+int main(){
+    int num;
+    cin >> num;
+
+    printKeypad(num);
+
+    return 0;
+}
