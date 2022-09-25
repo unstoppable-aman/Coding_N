@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+void swap(int i,int j,string &input)
+{
+    char ch=input[i];
+    input[i]=input[j];
+    input[j]=ch;
+}
+int helper(int ind,string &input,string output[])
+{   static int count=0;
+    if(ind==input.length())
+    {
+        output[count++]=input;
+        return count;
+    }
+    for(int i=ind;i<input.length();i++)
+    {
+        swap(i,ind,input);
+        helper(ind+1,input,output);
+        swap(i,ind,input);
+    }
+    return count;
+}
+int returnPermutations(string input, string output[]){
+       /* Don't write main() function.
+     * Don't read input, it is passed as function argument.
+     * Print output as specified in the question
+    */
+    return helper(0,input,output);
+}
+
+int main(){
+    string input;
+    cin >> input;
+    string output[10000];
+    int count = returnPermutations(input, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}
