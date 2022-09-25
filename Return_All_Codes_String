@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+#include <string.h>
+using namespace std;
+
+string getString(char x)
+{
+    // string class has a constructor
+    // that allows us to specify size of
+    // string as first parameter and character
+    // to be filled in given size as second
+    // parameter.
+    string s(1, x);
+ 
+    return s;
+}
+int c_to_i(string input)
+{
+    int actual_num = stoi(input);
+    return actual_num;
+}
+int helper(string input,string output[],string temp)
+{   static int size=0;
+    string code = "abcdefghijklmnopqrstuvwxyz";
+    if(input.empty())
+    {
+        output[size++]=temp;
+        return size;
+    }
+    string i=getString(input[0]);
+    
+    int num1=c_to_i(i);
+    helper(input.substr(1),output,temp+code[num1-1]);
+    if(input.length()>1)
+    {   string j=getString(input[1]);
+        int num2=c_to_i(i+j);
+        if((num2-1)<26){
+            helper(input.substr(2),output,temp+code[num2-1]);
+        }
+    }
+    return size;
+}
+int getCodes(string input, string output[10000]) {
+    return helper(input,output,"");
+}
+
+int main(){
+    string input;
+    cin >> input;
+
+    string output[10000];
+    int count = getCodes(input, output);
+    for(int i = 0; i < count && i < 10000; i++)
+        cout << output[i] << endl;
+    return 0;
+}
